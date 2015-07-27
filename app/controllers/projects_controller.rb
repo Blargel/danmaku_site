@@ -1,16 +1,16 @@
 class ProjectsController < ApplicationController
   inherit_resources
   include PermalinkResources
-  belongs_to :user, :finder => :find_by_permalink!, :optional => true  
+  belongs_to :user, :finder => :find_by_permalink!, :optional => true
 
   # preload all resource / collection in before filter
   before_filter :collection, :only =>[:index]
   before_filter :resource, :only => [:show, :edit, :update, :destroy]
   before_filter :build_resource, :only => [:new, :create, :index]
-  
+
   authorize_resource
-  
-  
+
+
   # Change redirect
   destroy! do |success, failure|
     success.html {redirect_to user_path(@user)}
@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
 
 
   private
-  # Filter, order, and paginate the collection  
+  # Filter, order, and paginate the collection
   def _collection
     if current_user && current_user.admin? && params[:search]
       unlisted = params[:search]["unlisted"].blank? ? false : params[:search]["unlisted"]
@@ -63,13 +63,13 @@ class ProjectsController < ApplicationController
     order_arr = order.split("_by_")
     direction = order_arr[0]
     column = order_arr[1]
-    
+
     if direction == "ascend"
       direction = "ASC"
     else
       direction = "DESC"
     end
-    
+
     if ["created_at", "updated_at", "title", "win_votes", "downloads"].include? column
       @search = @search.order("#{column} #{direction}")
     end

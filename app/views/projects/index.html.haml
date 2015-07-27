@@ -10,15 +10,15 @@
   = will_paginate @projects, :inner_window => 2
 
   Order: &nbsp
-  = order @search, :by => :created_at, :as => "Created Date"
+  = order @projects, :by => :created_at, :as => "Created Date"
   &nbsp
-  = order @search, :by => :updated_at, :as => "Updated Date"
+  = order @projects, :by => :updated_at, :as => "Updated Date"
   &nbsp
-  = order @search, :by => :title, :as => "Title"
+  = order @projects, :by => :title, :as => "Title"
   &nbsp
-  = order @search, :by => :win_votes, :as => "Rating"
+  = order @projects, :by => :win_votes, :as => "Rating"
   &nbsp
-  = order @search, :by => :downloads, :as => "Downloads"
+  = order @projects, :by => :downloads, :as => "Downloads"
 
   - @projects.each_with_index do |p, i|
     = render :partial => 'shared/project', :locals => {:p => p}

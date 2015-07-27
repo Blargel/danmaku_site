@@ -56,7 +56,7 @@
         = link_to( project.title + " (" + project.downloads.to_s + " downloads)", user_project_path(project.user, project) )
         %br
       %br
-      = link_to "See more...", projects_path(:search => {:order => :descend_by_downloads})
+      = link_to "See more...", search_path(:search => {:order => :descend_by_downloads})
 
     .span4
       %h3
@@ -65,7 +65,7 @@
         = link_to( project.title + " (" + project.win_votes.to_s + " win votes)", user_project_path(project.user, project) )
         %br
       %br
-      = link_to "See more...", projects_path(:search => {:order => :descend_by_win_votes})
+      = link_to "See more...", search_path(:search => {:order => :descend_by_win_votes})
 
     .span4
       %h3
@@ -74,4 +74,4 @@
         = link_to( project.title + " (" + project.created_at.strftime('%b %e %Y, %I:%M %p') + ")", user_project_path(project.user, project) )
         %br
       %br
-      = link_to "See more...", projects_path(:search => {:order => :descend_by_created_at})
+      = link_to "See more...", search_path(:search => {:order => :descend_by_created_at})

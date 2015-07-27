@@ -1,0 +1,21 @@
+= render :partial => 'search/search_form'
+
+= will_paginate @search, :inner_window => 2
+
+Order:
+&nbsp
+= order @search, :by => :created_at, :as => "Created Date"
+&nbsp
+= order @search, :by => :updated_at, :as => "Updated Date"
+&nbsp
+= order @search, :by => :title, :as => "Title"
+&nbsp
+= order @search, :by => :win_votes, :as => "Rating"
+&nbsp
+= order @search, :by => :downloads, :as => "Downloads"
+
+- @search.each_with_index do |p, i|
+  = render :partial => 'shared/project', :locals => {:p => p}
+  = "<hr />".html_safe unless i == 9
+
+= will_paginate @search, :inner_window => 2

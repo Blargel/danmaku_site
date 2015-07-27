@@ -10,11 +10,11 @@ module ApplicationHelper
     image = image_tag project.images.first.attachment.url(type) unless project.images.empty?
     link_to image, user_project_path(project.user, project), :class => "thumbnail"
   end
-  
+
   def w3c_date(date)
      date.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")
   end
-  
+
   def setup_project(project)
     returning(project) do |p|
       while(p.images.length < 4) do
@@ -23,12 +23,12 @@ module ApplicationHelper
       p.versions.build if p.versions.empty?
     end
   end
-  
+
   def has_role?(role)
     return false unless current_user
     current_user.roles.include? role
   end
-  
+
   def direction(sym)
     search_params = params[:search] || {}
     if search_params[:order] == "descend_by_#{sym}"
@@ -37,7 +37,7 @@ module ApplicationHelper
       "descend_by_#{sym}"
     end
   end
-  
+
   def order(search, options)
     if params[:search]
       search_params = params[:search].dup || {}
@@ -51,22 +51,22 @@ module ApplicationHelper
 
     link_to( options[:as], path, options )
   end
-  
+
   def s3_swf_upload_area(key_prefix)
     raw s3_swf_upload_tag(
       :fileTypes => '*.zip;*.rar;*.7z;*.tar;*.dat',
       :fileTypeDescs => 'Archive files.',
       :keyPrefix => key_prefix,
-      :selectMultipleFiles => false, 
-      :onQueueChange => 'queueChangeHandler(queue);', 
-      :onUploadingStart => 'uploadingStartHandler();', 
-      :onSignatureIOError => "alert('Signature IO Error');", 
-      :onSignatureXMLError => "alert('Signature XML Error');", 
-      :onSignatureSecurityError => "alert('Signature Security Error');", 
-      :onUploadError => "alert('Upload Error');", 
-      :onUploadIOError => "alert('Upload IO Error');", 
-      :onUploadSecurityError => "alert('Upload Security Error');", 
-      :onUploadProgress => 'progressHandler(progress_event);', 
+      :selectMultipleFiles => false,
+      :onQueueChange => 'queueChangeHandler(queue);',
+      :onUploadingStart => 'uploadingStartHandler();',
+      :onSignatureIOError => "alert('Signature IO Error');",
+      :onSignatureXMLError => "alert('Signature XML Error');",
+      :onSignatureSecurityError => "alert('Signature Security Error');",
+      :onUploadError => "alert('Upload Error');",
+      :onUploadIOError => "alert('Upload IO Error');",
+      :onUploadSecurityError => "alert('Upload Security Error');",
+      :onUploadProgress => 'progressHandler(progress_event);',
       :onUploadComplete => 'uploadingFinishHandler(upload_options,event);',
       :buttonUpPath => '/flash/s3_up_button.png',
       :buttonOverPath => '/flash/s3_over_button.png',
@@ -77,8 +77,8 @@ module ApplicationHelper
   end
 
   def tag_list(project)
-    tag_list = project.tags.map do |tag| 
-      link_to h(tag.name), projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags)
+    tag_list = project.tags.map do |tag|
+      link_to h(tag.name), search_path(:search => {:tagged_with => tag.name}, :search_type => :tags)
     end
     tag_list.join(", ").html_safe
   end

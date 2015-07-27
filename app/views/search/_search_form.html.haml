@@ -1,0 +1,27 @@
+- form_tag search_path, :class => 'formtastic', :method => :get do
+  %table{ :cellpadding => 5 }
+    %tr
+      %td
+        = label_tag 'search[title_like]', "Title includes:"
+        = text_field_tag 'search[title_like]', @title_like
+      %td
+        = label_tag 'search[category_is]', "Category:"
+        = select_tag 'search[category_is]', options_from_collection_for_select(Category.all, 'id', 'name', @category_is), :include_blank => true
+    %tr
+      %td
+        = label_tag 'search[user_login_like]', "Created by user:"
+        = text_field_tag 'search[user_login_like]', @user_login_like
+      %td
+        = label_tag 'search[danmakufu_version_is]', "Danmakufu Version:"
+        = select_tag 'search[danmakufu_version_is]', options_from_collection_for_select(DanmakufuVersion.all, 'id', 'name', @danmakufu_version_is), :include_blank => true
+    %tr
+      %td
+        = label_tag 'search[tagged_with]', "Tagged with:"
+        = text_field_tag 'search[tagged_with]', @tagged_with
+      %td
+        - if current_user && current_user.admin?
+          = label_tag 'search[unlisted]', "Unlisted:"
+          = select_tag 'search[unlisted]', options_for_select([['true', 'true'], ['false', 'false']], @unlisted), :include_blank => true
+
+  = submit_tag "Search", :id => "search_submit", :class => "btn btn-primary"
+
