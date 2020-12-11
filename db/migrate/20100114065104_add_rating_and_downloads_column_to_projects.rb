@@ -1,4 +1,4 @@
-class AddRatingAndDownloadsColumnToProjects < ActiveRecord::Migration
+class AddRatingAndDownloadsColumnToProjects < ActiveRecord::Migration[4.2]
   def self.up
     add_column :projects, :rating, :integer, :default => 0
     add_column :projects, :downloads, :integer, :default => 0

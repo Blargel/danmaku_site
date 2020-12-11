@@ -1,12 +1,12 @@
 .row
-  - semantic_form_for @user do |form|
-    - form.inputs do
+  = semantic_form_for @user do |form|
+    = form.inputs do
       = raw form.input :login, :label => "Username", :required => true
       = raw form.input :email, :required => true
-      = raw form.input :password, :required => true if form.object.new_record?
-      = raw form.input :password, :label => "Change password", :hint => "Leave this blank to keep it the same." unless form.object.new_record?
-      = raw form.input :password_confirmation
+      = raw form.input :password, as: :password, :required => true if form.object.new_record?
+      = raw form.input :password, as: :password, :label => "Change password", :hint => "Leave this blank to keep it the same." unless form.object.new_record?
+      = raw form.input :password_confirmation, as: :password
       = raw form.input :admin if has_role?(:admin)
     - if form.object.new_record?
-      = recaptcha_tags
+      = recaptcha_v3 action: "registration"
     = raw form.actions

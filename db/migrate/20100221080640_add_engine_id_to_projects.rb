@@ -1,4 +1,4 @@
-class AddEngineIdToProjects < ActiveRecord::Migration
+class AddEngineIdToProjects < ActiveRecord::Migration[4.2]
   def self.up
     remove_column :projects, :category
     remove_column :projects, :engine

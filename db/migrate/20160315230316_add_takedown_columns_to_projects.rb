@@ -1,4 +1,4 @@
-class AddTakedownColumnsToProjects < ActiveRecord::Migration
+class AddTakedownColumnsToProjects < ActiveRecord::Migration[4.2]
   def self.up
     add_column :projects, :soft_deleted, :boolean, :default => false
     add_column :projects, :deleted_reason, :string

@@ -1,4 +1,4 @@
-class ChangeRatingToTwoColumnsInProjects < ActiveRecord::Migration
+class ChangeRatingToTwoColumnsInProjects < ActiveRecord::Migration[4.2]
   def self.up
     remove_column :projects, :rating
     add_column :projects, :win_votes, :integer, :default => 0

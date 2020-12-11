@@ -6,12 +6,14 @@ class Image < Asset
     },
     :storage => :s3,
     :s3_credentials => {
-      :access_key_id     => S3SwfUpload::S3Config.access_key_id,
-      :secret_access_key => S3SwfUpload::S3Config.secret_access_key,
-      :bucket => S3SwfUpload::S3Config.bucket
+      :access_key_id     => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+      :bucket => ENV['AWS_BUCKET'],
+      :s3_region => ENV['AWS_REGION']
     },
     :path => "/images/:id/:style.:extension"
 
+  validates_attachment_content_type :attachment, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
   def url(style=:normal)
     attachment.url(style).gsub("http://", "https://")

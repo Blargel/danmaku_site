@@ -1,4 +1,4 @@
-class AddYouTubeVideoIdToProject < ActiveRecord::Migration
+class AddYouTubeVideoIdToProject < ActiveRecord::Migration[4.2]
   def self.up
     add_column :projects, :youtube_video_id, :string
   end

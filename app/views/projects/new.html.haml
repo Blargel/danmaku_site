@@ -1,8 +1,8 @@
 .page-header
   %h1 Creating New Project
 .row
-  - semantic_form_for setup_project(@project), :url => user_projects_path(@user) do |form|
-    - form.inputs do
+  = semantic_form_for setup_project(@project), :url => user_projects_path(@user) do |form|
+    = form.inputs do
       = form.input :title, :required => true
       = form.input :danmakufu_version
       = form.input :version_number, :required => true

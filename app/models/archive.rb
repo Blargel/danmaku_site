@@ -1,8 +1,5 @@
 class Archive < Asset
-  AWS::S3::Base.establish_connection!(
-    :access_key_id     => S3SwfUpload::S3Config.access_key_id,
-    :secret_access_key => S3SwfUpload::S3Config.secret_access_key
-  )
+  # has_one_attached :attachment
 
   before_destroy :destroy_s3_data
   MAX_FILE_SIZE = '300 MB'
@@ -11,31 +8,34 @@ class Archive < Asset
     s3_archive = find_s3_archive
     s3_data = s3_archive.about
 
-    self.attachment_content_type = s3_data["content-type"]
-    self.attachment_file_size = s3_data["content-length"].to_i
-    self.attachment_updated_at = s3_data["last-modified"]
+    self.attachment_content_type = s3_archive.content_type
+    self.attachment_file_size = s3_archive.content_length
+    self.attachment_updated_at = s3_archive.last_modified
   end
 
   def attachment_url
-    s3_archive = find_s3_archive
-    s3_archive.url.gsub("http://", "https://")
+    s3_archive.public_url
   end
 
   def destroy_s3_data
-    return unless AWS::S3::S3Object.exists? s3_key, S3SwfUpload::S3Config.bucket
-
-    s3_archive = find_s3_archive
-    s3_archive.delete
-
-    if AWS::S3::S3Object.exists? s3_key, S3SwfUpload::S3Config.bucket
-      errors.add(:base, "S3 data not destroyed")
-      false
-    end
+    s3_archive.delete if s3_archive.exists?
   end
 
   private
 
-  def find_s3_archive
-    AWS::S3::S3Object.find s3_key, S3SwfUpload::S3Config.bucket
+  def s3
+    @s3 ||= Aws::S3::Resource.new(region: region)
+  end
+
+  def region
+    ENV['AWS_REGION'] || 'us-east-1'
+  end
+
+  def bucket
+    @bucket ||= s3.bucket(ENV['AWS_BUCKET'])
+  end
+
+  def s3_archive
+    @s3_archive ||= bucket.object(s3_key)
   end
 end

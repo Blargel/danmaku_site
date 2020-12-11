@@ -1,5 +1,5 @@
-class Project < ActiveRecord::Base
-  belongs_to :user
+class Project < ApplicationRecord
+  belongs_to :user, counter_cache: true
   belongs_to :category
   belongs_to :danmakufu_version
   has_many   :images,  :as => :attachable, :dependent => :destroy

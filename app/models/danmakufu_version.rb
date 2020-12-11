@@ -1,4 +1,4 @@
-class DanmakufuVersion < ActiveRecord::Base
+class DanmakufuVersion < ApplicationRecord
   has_many :projects
 
   def self.select_array

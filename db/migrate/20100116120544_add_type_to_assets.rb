@@ -1,4 +1,4 @@
-class AddTypeToAssets < ActiveRecord::Migration
+class AddTypeToAssets < ActiveRecord::Migration[4.2]
   def self.up
     add_column :assets, :type, :string
   end

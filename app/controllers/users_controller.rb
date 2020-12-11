@@ -1,23 +1,20 @@
-require 'will_paginate/array'
-
 class UsersController < ApplicationController
   inherit_resources
   include PermalinkResources
 
   # preload all resource / collection in before filter
-  before_filter :collection, :only =>[:index]
-  before_filter :resource, :only => [:show, :edit, :update, :destroy]
-  before_filter :build_resource, :only => [:new, :create, :index]
-  before_filter :sanitize_params, :only => [:update, :create]
+  before_action :collection, :only =>[:index]
+  before_action :resource, :only => [:show, :edit, :update, :destroy]
+  before_action :build_resource, :only => [:new, :create, :index]
+  before_action :sanitize_params, :only => [:update, :create]
 
   authorize_resource
 
-
   def create
-    @user = User.new(params[:user])
+    @user = User.new(permitted_params[:user])
     @user.ip_address = request.headers["CF-Connecting-IP"] || request.remote_ip
 
-    unless verify_recaptcha
+    unless verify_recaptcha(model: @user, action: "registration")
       flash[:error] = "Please solve the captcha."
       render :new
       return
@@ -59,6 +56,10 @@ class UsersController < ApplicationController
 
   protected
 
+  def permitted_params
+    params.permit(user: [:login, :email, :password, :password_confirmation, :admin])
+  end
+
   def sanitize_params
     params[:user].delete :admin unless current_user && current_user.admin
   end
@@ -69,7 +70,7 @@ class UsersController < ApplicationController
 
     order_collection
 
-    @users.paginate(:per_page => 10, :page => params[:page], :order => 'created_at DESC')
+    @users.order(created_at: :desc).page(params[:page])
   end
 
   def order_collection
@@ -81,16 +82,11 @@ class UsersController < ApplicationController
     column = order_arr[1]
 
     if direction == "ascend"
-      direction = "ASC"
+      direction = :asc
     else
-      direction = "DESC"
+      direction = :desc
     end
 
-    if ["created_at", "login"].include? column
-      @users = @users.order("#{column} #{direction}")
-    elsif "projects_count" == column
-      @users = @users.all.sort_by{ |u| u.projects.count }
-      @users = @users.reverse if direction == "DESC"
-    end
+    @users = @users.order(column => direction, created_at: :desc)
   end
 end

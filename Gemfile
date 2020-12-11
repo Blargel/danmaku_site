@@ -1,28 +1,45 @@
-source "https://rubygems.org"
-ruby "1.9.3"
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rake', '0.8.7'
-gem "rails", '~> 3.0.20'
-gem 'pg'
-gem 'haml'
-gem 'will_paginate'
-gem 'inherited_resources'
-gem 'cancan'
+ruby '2.7.1'
+
 gem 'acts-as-taggable-on'
 gem 'authlogic'
-gem 'paperclip', :git => 'git://github.com/lightyear/paperclip'
-gem 's3_swf_upload', :git => 'git://github.com/Blargel/s3-swf-upload-plugin'
-gem 'aws-s3', :require => 'aws/s3'
-gem 'formtastic', '~> 2.0', :require => 'formtastic'
-gem 'jquery-rails', '~> 2.1'
+gem 'aws-sdk-s3', require: false
+gem 'bootsnap', '>= 1.4.2', require: false
+gem 'cancancan'
+gem 'formtastic', '~> 4.0.0.rc1', require: 'formtastic'
+gem 'haml-rails'
+gem 'image_processing', '~> 1.2'
+gem 'inherited_resources'
+gem 'jbuilder', '~> 2.7'
+gem 'mini_magick'
+gem 'paperclip'
 gem 'permalink_fu'
-gem 'rails_12factor'
-gem 'recaptcha', '~> 0.4.0', :require => "recaptcha/rails"
+gem 'pg', '>= 0.18', '< 2.0'
+gem 'puma', '~> 4.1'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
+gem 'recaptcha'
+gem 'sass-rails', '>= 6'
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'webpacker', '~> 4.0'
+gem 'will_paginate'
+gem 's3_swf_upload', require: 's3_swf_upload/view_helpers'
 
-group :development do
-  gem 'sqlite3-ruby'
+# Apple Silicon fix
+gem 'ffi', github: 'felipecsl/ffi', ref: '17dbdfc43d1f6db1cbd2ff14635ffa1a620380a6'
+
+group :development, :test do
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'dotenv-rails'
+  gem 'rubocop'
 end
 
-group :production do
-  gem 'thin'
+group :development do
+  gem 'foreman'
+  gem 'listen', '~> 3.2'
+  gem 'solargraph'
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'web-console', '>= 3.3.0'
 end

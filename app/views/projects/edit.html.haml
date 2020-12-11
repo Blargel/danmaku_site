@@ -3,8 +3,8 @@
     Editing
     = @project.title
 .row
-  - semantic_form_for setup_project(@project), :url => user_project_path(@user, @project), :html => { :multipart => true } do |form|
-    - form.inputs do
+  = semantic_form_for setup_project(@project), :url => user_project_path(@user, @project), :html => { :multipart => true } do |form|
+    = form.inputs do
       = form.input :title, :required => true
       = form.input :version_number, :required => true
       = form.input :danmakufu_version
@@ -14,8 +14,8 @@
       = form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas"
       = form.input :unlisted, :hidden_fields => false
     %br
-    - form.semantic_fields_for :images do |image|
-      - image.inputs do
+    = form.semantic_fields_for :images do |image|
+      = image.inputs do
         - if image.object.new_record?
           = image.input :attachment, :label => "Image attachment"
         - else

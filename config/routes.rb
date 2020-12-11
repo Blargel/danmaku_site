@@ -1,5 +1,4 @@
 BulletForge::Application.routes.draw do
-
   resources :users, :path => 'u' do
     resources :projects, :path => 'p' do
       resource :archive, :only => [:show, :destroy]
@@ -22,5 +21,5 @@ BulletForge::Application.routes.draw do
   get '/search' => 'search#advanced_search', :as => :search
 
   root :to => 'home#show'
-  match '/:controller(/:action(/:id))'
+  match '/:controller(/:action(/:id))', via: [:get, :post]
 end

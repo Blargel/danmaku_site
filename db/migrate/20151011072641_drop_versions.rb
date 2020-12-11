@@ -1,4 +1,4 @@
-class DropVersions < ActiveRecord::Migration
+class DropVersions < ActiveRecord::Migration[4.2]
   def self.up
     drop_table :versions
   end

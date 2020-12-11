@@ -10,15 +10,15 @@
     %meta{ :name => "description", :content => "Dedicated Danmakufu Project Hosting" }
 
     - if Time.now.month == 4 && Time.now.day == 1
-      = stylesheet_link_tag 'geo-bootstrap'
+      = stylesheet_link_tag '/stylesheets/geo-bootstrap'
     - else
-      = stylesheet_link_tag 'bootstrap'
-    = stylesheet_link_tag 'formtastic'
-    = stylesheet_link_tag 'formtastic-overrides'
+      = stylesheet_link_tag '/stylesheets/bootstrap'
+    = stylesheet_link_tag '/stylesheets/formtastic'
+    = stylesheet_link_tag '/stylesheets/formtastic-overrides'
 
-    = javascript_include_tag 'jquery.min', 'jquery.metadata', 'jquery_ujs'
-    = javascript_include_tag 'json2', 's3_upload.js', 's3_upload_callbacks.js'
-    = javascript_include_tag 'bootstrap-alert', 'bootstrap-tab', 'application'
+    = javascript_include_tag '/javascripts/jquery.min', '/javascripts/jquery.metadata', '/javascripts/jquery_ujs'
+    = javascript_include_tag '/javascripts/json2', '/javascripts/s3_upload.js', '/javascripts/s3_upload_callbacks.js'
+    = javascript_include_tag '/javascripts/bootstrap-alert', '/javascripts/bootstrap-tab', '/javascripts/application'
   %body
 
     = render :partial => 'layouts/navbar'

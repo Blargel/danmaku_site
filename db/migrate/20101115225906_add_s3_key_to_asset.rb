@@ -1,4 +1,4 @@
-class AddS3KeyToAsset < ActiveRecord::Migration
+class AddS3KeyToAsset < ActiveRecord::Migration[4.2]
   def self.up
     add_column :assets, :s3_key, :string
   end

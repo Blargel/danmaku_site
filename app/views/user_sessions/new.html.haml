@@ -2,7 +2,7 @@
   %h1
     Login
 
-- semantic_form_for @user_session, :url => user_session_path do |f|
+= semantic_form_for @user_session, :url => user_session_path do |f|
   = f.inputs :login, :password
   = f.actions do
     = f.action :submit, :label => "Log In"

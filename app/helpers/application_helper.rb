@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def setup_project(project)
-    returning(project) do |p|
+    project.tap do |p|
       while(p.images.length < 4) do
         p.images.build
       end
@@ -40,7 +40,7 @@ module ApplicationHelper
   def order(search, options)
     if params[:search]
       search_params = params[:search].dup || {}
-      search_params = search_params.merge( :order => direction(options[:by]) )
+      search_params = search_params.permit!.merge( :order => direction(options[:by]) )
       new_params = {:search => search_params}
     else
       new_params = {:search => {:order => direction(options[:by])}}

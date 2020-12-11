@@ -1,4 +1,4 @@
-class CreateDanmakufuVersions < ActiveRecord::Migration
+class CreateDanmakufuVersions < ActiveRecord::Migration[4.2]
   def self.up
     create_table :danmakufu_versions do |t|
       t.string   :name
